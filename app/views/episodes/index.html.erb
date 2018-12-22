@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<section id="todoapp">
+  <header id="header" data-turbolinks-permanent>
+    <h1>Episodes</h1>
+    <%= form_for Episode.new, remote: true, authenticity_token: true do |f| %>
+      <%= f.text_field :title, id: "new-episode" %>
+    <% end %>
+  </header>
+  <% @episodes.load %>
+  <section id="main">
+    <ul id="episodes">
+        <% @episodes.each do |episode| %>
+          <div data-controller="episode">
+            <li id="episodes:<%= episode.id %>" class="<%= 'completed' if episode.is_completed %>">
+              <div class="view">
+                <%= form_for episode, data: { remote: true, target: "episode.form" }, authenticity_token: true do |f| %>
+                  <%= f.check_box :is_completed, class: "toggle", "data-action": "click->episode#submit_on_check" %>
+                <% end %>
+                <label class="toggle-me"><%= episode.title %></label>
+              </div>
+            </li>
+          </div>
+        <% end %>
+  </section>
+</section>
