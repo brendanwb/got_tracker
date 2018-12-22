@@ -12,17 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2018_11_23_205938) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "episodes", force: :cascade do |t|
     t.string "title"
     t.boolean "is_completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "shows", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
 end
