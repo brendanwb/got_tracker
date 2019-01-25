@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
 <section id="todoapp">
   <header id="header" data-turbolinks-permanent>
-    <h1>Episodes</h1>
+    <h1>Game of Thrones Rewatch List</h1>
+    <h3><%= @tracker.remaining_episodes %> out of <%= @tracker.total_episodes %> left to watch (<%= number_to_percentage(@tracker.percent_remaining, precision: 2) %>)</h3>
+    <h3><%= @tracker.days_before_new_episodes %> days until new episodes.</h3>
+    <h3>Weeks Left: <%= @tracker.weeks_left %></h3>
+    <h3>Episodes per week to keep pace: <%= @tracker.episodes_per_week %></h3>
+    <h3>On Schedule: <%= @tracker.on_schedule? ? "Yes" : "No" %></h3>
   </header>
   <% @episodes.load %>
   <section id="main">
@@ -11,9 +16,11 @@
             <li id="episodes:<%= episode.id %>" class="<%= 'completed' if episode.is_completed %>">
               <div class="view">
                 <%= form_for episode, data: { remote: true, target: "episode.form" }, authenticity_token: true do |f| %>
-                  <%= f.check_box :is_completed, class: "toggle", "data-action": "click->episode#submit_on_check" %>
+                  <label class="toggle-me">
+                    <%= f.check_box :is_completed, class: "toggle", "data-action": "click->episode#submit_on_check" %>
+                    <%= episode.title %>
+                  </label>
                 <% end %>
-                <label class="toggle-me"><%= episode.title %></label>
               </div>
             </li>
           </div>

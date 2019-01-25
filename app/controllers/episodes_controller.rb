@@ -1,10 +1,11 @@
 class EpisodesController < ApplicationController
-  before_action :set_episode, only: [:show, :edit, :update, :destroy]
+  before_action :require_login
 
   # GET /episodes
   # GET /episodes.json
   def index
     load_episodes
+    @tracker = Tracker.new({ episodes: @episodes, new_episodes_start_date: "2019/04/14".to_date })
   end
 
   # POST /episodes
@@ -21,29 +22,16 @@ class EpisodesController < ApplicationController
     load_and_render_index
   end
 
-  # DELETE /episodes/1
-  # DELETE /episodes/1.json
-  def destroy
-    @episode.destroy
-    respond_to do |format|
-      format.html { redirect_to episodes_url, notice: 'Episode was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def load_episodes
-    @episodes = Episode.all
+    @episodes = Episode.all.order(title: :asc)
   end
 
   def load_and_render_index
     load_episodes
-    render :index, change: "episodes"
-  end
-
-  def set_episode
-    @episode = Episode.find(params[:id])
+    @tracker = Tracker.new({ episodes: @episodes, new_episodes_start_date: "2019/04/14".to_date })
+    render :index
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
