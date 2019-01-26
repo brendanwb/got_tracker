@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>StimulatingTracker</title>
+    <title>Todo List Tracker</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application' %>
   </head>
 
-  <body>
+  <body class="font-sans">
     <%= yield %>
   </body>
 </html>

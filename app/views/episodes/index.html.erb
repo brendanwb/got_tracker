@@ -1,23 +1,38 @@
 <p id="notice"><%= notice %></p>
 <section id="todoapp">
-  <header id="header" data-turbolinks-permanent>
-    <h1>Game of Thrones Rewatch List</h1>
-    <h3><%= @tracker.remaining_episodes %> out of <%= @tracker.total_episodes %> left to watch (<%= number_to_percentage(@tracker.percent_remaining, precision: 2) %>)</h3>
-    <h3><%= @tracker.days_before_new_episodes %> days until new episodes.</h3>
-    <h3>Weeks Left: <%= @tracker.weeks_left %></h3>
-    <h3>Episodes per week to keep pace: <%= @tracker.episodes_per_week %></h3>
-    <h3>On Schedule: <%= @tracker.on_schedule? ? "Yes" : "No" %></h3>
+  <header id="header" class="bg-blue-dark" data-turbolinks-permanent>
+    <div class="container text-white pt-5 pb-5 mx-auto">
+      <h1>Game of Thrones Rewatch List</h1>
+    </div>
   </header>
+  <div class="flex">
+    <div class="flex-1 text-white bg-orange p-2 text-center">
+      <h3><%= @tracker.remaining_episodes %> out of <%= @tracker.total_episodes %> left to watch (<%= number_to_percentage(@tracker.percent_remaining, precision: 2) %>)</h3>
+    </div>
+    <div class="flex-1 text-white bg-teal-light p-2 text-center">
+      <h3><%= @tracker.days_before_new_episodes %> days until new episodes.</h3>
+    </div>
+    <div class="flex-1 text-white bg-pink-dark p-2 text-center">
+      <h3>Weeks Left: <%= @tracker.weeks_left %></h3>
+    </div>
+    <div class="flex-1 text-white bg-blue-light p-2 text-center">
+      <h3>Episodes per week to keep pace: <%= @tracker.episodes_per_week %></h3>
+    </div>
+    <div class="flex-1 text-white bg-orange-dark p-2 text-center">
+      <h3>On Schedule: <%= @tracker.on_schedule? ? "Yes" : "No" %></h3>
+    </div>
+  </div>
   <% @episodes.load %>
   <section id="main">
-    <ul id="episodes">
+    <div class="container mt-4 mx-auto bg-gray-lightest">
+      <ul id="list" class="list-reset">
         <% @episodes.each do |episode| %>
-          <div data-controller="episode">
+          <div data-controller="episode" class="bg-blue leading-none rounded-lg shadow overflow-hidden p-3 mb-4">
             <li id="episodes:<%= episode.id %>" class="<%= 'completed' if episode.is_completed %>">
               <div class="view">
                 <%= form_for episode, data: { remote: true, target: "episode.form" }, authenticity_token: true do |f| %>
-                  <label class="toggle-me">
-                    <%= f.check_box :is_completed, class: "toggle", "data-action": "click->episode#submit_on_check" %>
+                  <label class="w-full mb-2 pt-1 px-2 text-lg text-grey-lightest font-semibold toggle-me">
+                    <%= f.check_box :is_completed, class: "mr-2 leading-tight toggle", "data-action": "click->episode#submit_on_check" %>
                     <%= episode.title %>
                   </label>
                 <% end %>
@@ -25,5 +40,7 @@
             </li>
           </div>
         <% end %>
+      </ul>
+    </div>
   </section>
 </section>
