@@ -35,7 +35,7 @@ class Tracker
   end
 
   def episodes_per_week
-    remaining_episodes / weeks_left
+    (remaining_episodes / weeks_left.to_f).round
   end
 
   def on_schedule?
